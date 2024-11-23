@@ -75,38 +75,76 @@
             text-align: center;
         }
 
-        /* Anzeigen an den Seiten */
+        /* Anzeigen an den Seiten für Desktop */
         .side-ad {
             position: fixed;
             top: 50%;
             transform: translateY(-50%);
-            width: 150px;
+            width: 200px;
             background-color: #333;
             color: white;
             padding: 20px;
             border-radius: 10px;
             text-align: center;
             z-index: 10;
+            font-size: 16px;
         }
 
         .side-ad.left {
-            left: 0;
+            left: 10px;
         }
 
         .side-ad.right {
-            right: 0;
+            right: 10px;
         }
 
-        .ad-section button {
+        .side-ad button {
             background-color: #ff5722;
             color: white;
         }
 
-        .ad-section button:hover {
+        .side-ad button:hover {
             background-color: #f44336;
         }
 
-        /* Impressum */
+        /* Mobilversion */
+        @media only screen and (max-width: 768px) {
+            .side-ad {
+                width: 150px;
+                font-size: 14px;
+                position: relative;
+                top: auto;
+                transform: none;
+                margin: 10px auto;
+            }
+
+            .ad-banner {
+                position: relative;
+                bottom: auto;
+                top: auto;
+            }
+
+            .side-ad.left,
+            .side-ad.right {
+                position: relative;
+                margin: 0;
+                top: auto;
+                left: auto;
+                right: auto;
+            }
+
+            /* Werbung unter dem Quiz auf mobilen Geräten */
+            .ad-banner {
+                position: relative;
+                bottom: auto;
+                top: auto;
+                margin-top: 20px;
+                display: block;
+                font-size: 16px;
+            }
+        }
+
+        /* Impressum-Button */
         #impressumLink {
             margin-top: 20px;
             font-size: 18px;
@@ -116,6 +154,10 @@
             background-color: #007BFF;
             border-radius: 5px;
             display: inline-block;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         #impressumLink:hover {
@@ -222,19 +264,6 @@
                           "Over 30,000 years old", 
                           "Over 65,000 years old", 
                           "Over 100,000 years old"]
-            },
-            {
-                question: "What is the name of the largest coral reef system in the world, located in Australia?",
-                correctAnswer: "The Great Barrier Reef",
-                answers: ["Great Barrier Reef", 
-                          "Blue Reef", 
-                          "Coral Sea Reef", 
-                          "Bali Reef"]
-            },
-            {
-                question: "Which Australian city has the world's largest tram system?",
-                correctAnswer: "Melbourne",
-                answers: ["Sydney", "Melbourne", "Brisbane", "Adelaide"]
             }
         ];
 
@@ -242,23 +271,23 @@
         let score = 0;
         let coins = 0;
 
-        // Funktion zum Starten des Spiels
+        // Funktion für das Starten des Quiz
         function startQuiz() {
             document.getElementById('startScreen').style.display = 'none';
             document.getElementById('quizContainer').style.display = 'block';
             loadQuestion();
         }
 
-        // Funktion zum Laden der Frage und Antworten
+        // Funktion zum Laden der aktuellen Frage
         function loadQuestion() {
             const questionElement = document.getElementById('question');
             const answersElement = document.getElementById('answers');
-            questionElement.innerText = quiz[currentQuestion].question;
-
-            answersElement.innerHTML = ''; // Löscht vorherige Antwortmöglichkeiten
+            const current = quiz[currentQuestion];
+            questionElement.innerText = current.question;
+            answersElement.innerHTML = '';
 
             // Mischen der Antworten
-            let shuffledAnswers = shuffleArray(quiz[currentQuestion].answers);
+            let shuffledAnswers = shuffleArray(current.answers);
             shuffledAnswers.forEach((answer, index) => {
                 const button = document.createElement('button');
                 button.innerText = answer;
@@ -331,7 +360,7 @@
 
         // Event Listener für den Start-Button
         document.getElementById('startButton').addEventListener('click', startQuiz);
-    </script>
 
+    </script>
 </body>
 </html>
