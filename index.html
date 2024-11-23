@@ -100,4 +100,120 @@
                 question: "Which two famous native animals can be found in Australia?",
                 correctAnswer: "Kangaroos and koalas",
                 answers: ["Elephants and tigers", 
-                          "Kangaroos and koalas"
+                          "Kangaroos and koalas", 
+                          "Pandas and monkeys", 
+                          "Lions and giraffes"]
+            },
+            {
+                question: "How old is the aboriginal culture in Australia?",
+                correctAnswer: "Over 65,000 years old",
+                answers: ["Over 10,000 years old", 
+                          "Over 30,000 years old", 
+                          "Over 65,000 years old", 
+                          "Over 100,000 years old"]
+            },
+            {
+                question: "What is the name of the largest coral reef system in the world, located in Australia?",
+                correctAnswer: "The Great Barrier Reef",
+                answers: ["Great Barrier Reef", 
+                          "Blue Reef", 
+                          "Coral Sea Reef", 
+                          "Bali Reef"]
+            },
+            {
+                question: "Which Australian city has the world's largest tram system?",
+                correctAnswer: "Melbourne",
+                answers: ["Sydney", "Melbourne", "Brisbane", "Adelaide"]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let coins = 0;
+
+        function loadQuestion() {
+            const questionElement = document.getElementById('question');
+            const answersElement = document.getElementById('answers');
+            questionElement.innerText = quiz[currentQuestion].question;
+
+            answersElement.innerHTML = ''; // Löscht vorherige Antwortmöglichkeiten
+
+            // Mischen der Antworten
+            let shuffledAnswers = shuffleArray(quiz[currentQuestion].answers);
+            shuffledAnswers.forEach((answer) => {
+                const button = document.createElement('button');
+                button.innerText = answer;
+                button.onclick = () => checkAnswer(answer);
+                answersElement.appendChild(button);
+            });
+        }
+
+        // Funktion zum Überprüfen der Antwort
+        function checkAnswer(selectedAnswer) {
+            const correctAnswer = quiz[currentQuestion].correctAnswer;
+            if (selectedAnswer === correctAnswer) {
+                alert('Richtig!');
+                score += 10;  // 10 Punkte für richtige Antwort
+                coins += 5;   // 5 Münzen für richtige Antwort
+            } else {
+                alert('Leider falsch. Versuch es nochmal!');
+            }
+        }
+
+        // Funktion zum Mischen der Antworten
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Funktion für die nächste Frage
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion >= quiz.length) {
+                endQuiz(); // Quiz beenden, wenn alle Fragen beantwortet sind
+            } else {
+                loadQuestion();
+            }
+        }
+
+        // Funktion, um das Quiz zu beenden
+        function endQuiz() {
+            document.getElementById('quizContainer').style.display = 'none';  // Quiz-Container ausblenden
+            document.getElementById('endScreen').style.display = 'block';    // Endscreen anzeigen
+
+            // Zeige die Ergebnisse an
+            document.getElementById('score').innerText = `Du hast ${score} Punkte gesammelt.`;
+            document.getElementById('coins').innerText = `Du hast ${coins} Münzen gesammelt.`;
+
+            // Geheimtipp kaufen, wenn genug Münzen
+            if (coins >= 30) {
+                let secretButton = document.createElement('button');
+                secretButton.innerText = "Geheimtipp kaufen (30 Münzen)";
+                secretButton.onclick = () => showSecretTip();
+                document.getElementById('endScreen').appendChild(secretButton);
+            }
+        }
+
+        // Funktion für den Geheimtipp
+        function showSecretTip() {
+            alert("Der 1. FC Kaiserslautern ist der schlechteste Verein der Welt!");
+        }
+
+        // Funktion zum Neustarten des Quiz
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            coins = 0;
+            document.getElementById('quizContainer').style.display = 'block';
+            document.getElementById('endScreen').style.display = 'none';
+            loadQuestion();
+        }
+
+        loadQuestion(); // Die erste Frage beim Laden der Seite anzeigen
+    </script>
+
+</body>
+</html>
