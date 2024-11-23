@@ -55,31 +55,119 @@
         const quiz = [
             {
                 question: "What is the world's sixth-largest country?",
-                answers: ["Canada", "Australia", "Brazil"],
-                correct: 1
+                correctAnswer: "Australia",
+                answers: ["Canada", "Australia", "Brazil", "India"]
             },
             {
                 question: "Approximately how many people live in Australia?",
-                answers: ["10 million", "25 million", "40 million"],
-                correct: 1
+                correctAnswer: "25 million",
+                answers: ["20 million", "25 million", "30 million", "35 million"]
             },
             {
                 question: "What is the capital city of Australia?",
-                answers: ["Sydney", "Melbourne", "Canberra"],
-                correct: 2
+                correctAnswer: "Canberra",
+                answers: ["Sydney", "Melbourne", "Canberra", "Perth"]
             },
             {
                 question: "What is the official language spoken in Australia?",
-                answers: ["French", "English", "Spanish"],
-                correct: 1
+                correctAnswer: "English",
+                answers: ["French", "English", "Spanish", "German"]
             },
             {
                 question: "Which city is the capital of Western Australia?",
-                answers: ["Sydney", "Perth", "Adelaide"],
-                correct: 1
+                correctAnswer: "Perth",
+                answers: ["Sydney", "Perth", "Adelaide", "Brisbane"]
             },
             {
                 question: "Name three famous attractions in Perth.",
-                answers: ["Eureka Tower, Botanic Gardens, Great Ocean Road", "Kings Park, Perth Zoo, Swan River", "Opera House, Darling Harbour, Bondi Beach"],
-                correct: 1
-       
+                correctAnswer: "Kings Park, Perth Zoo, Swan River",
+                answers: ["Eureka Tower, Botanic Gardens, Great Ocean Road", 
+                          "Kings Park, Perth Zoo, Swan River", 
+                          "Opera House, Darling Harbour, Bondi Beach", 
+                          "Sydney Harbour Bridge, Great Barrier Reef, Uluru"]
+            },
+            {
+                question: "Which two famous native animals can be found in Australia?",
+                correctAnswer: "Kangaroos and koalas",
+                answers: ["Elephants and tigers", 
+                          "Kangaroos and koalas", 
+                          "Pandas and monkeys", 
+                          "Lions and giraffes"]
+            },
+            {
+                question: "How old is the aboriginal culture in Australia?",
+                correctAnswer: "Over 65,000 years old",
+                answers: ["Over 10,000 years old", 
+                          "Over 30,000 years old", 
+                          "Over 65,000 years old", 
+                          "Over 100,000 years old"]
+            },
+            {
+                question: "What is the name of the largest coral reef system in the world, located in Australia?",
+                correctAnswer: "The Great Barrier Reef",
+                answers: ["Great Barrier Reef", 
+                          "Blue Reef", 
+                          "Coral Sea Reef", 
+                          "Bali Reef"]
+            },
+            {
+                question: "Which Australian city has the world's largest tram system?",
+                correctAnswer: "Melbourne",
+                answers: ["Sydney", "Melbourne", "Brisbane", "Adelaide"]
+            }
+        ];
+
+        let currentQuestion = 0;
+
+        // Funktion zum Laden der Frage und Antworten
+        function loadQuestion() {
+            const questionElement = document.getElementById('question');
+            const answersElement = document.getElementById('answers');
+            questionElement.innerText = quiz[currentQuestion].question;
+
+            answersElement.innerHTML = ''; // Löscht vorherige Antwortmöglichkeiten
+
+            // Mischen der Antworten
+            let shuffledAnswers = shuffleArray(quiz[currentQuestion].answers);
+            shuffledAnswers.forEach((answer, index) => {
+                const button = document.createElement('button');
+                button.innerText = answer;
+                button.onclick = () => checkAnswer(answer);
+                answersElement.appendChild(button);
+            });
+        }
+
+        // Funktion zum Überprüfen der Antwort
+        function checkAnswer(selectedAnswer) {
+            const correctAnswer = quiz[currentQuestion].correctAnswer;
+            if (selectedAnswer === correctAnswer) {
+                alert('Richtig!');
+            } else {
+                alert('Leider falsch. Versuch es nochmal!');
+            }
+        }
+
+        // Funktion zum Mischen der Antworten
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Funktion für die nächste Frage
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion >= quiz.length) {
+                alert('Quiz beendet! Du hast alle Fragen beantwortet.');
+                currentQuestion = 0; // Zurücksetzen für ein neues Quiz
+            }
+            loadQuestion();
+        }
+
+        loadQuestion(); // Die erste Frage beim Laden der Seite anzeigen
+    </script>
+
+</body>
+</html>
