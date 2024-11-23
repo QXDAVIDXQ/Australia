@@ -10,7 +10,11 @@
             background-color: #f4f4f4;
             color: #333;
             text-align: center;
+            margin: 0;
+            padding: 0;
+            position: relative;
         }
+
         .quiz-container {
             background-color: white;
             padding: 20px;
@@ -20,6 +24,7 @@
             max-width: 600px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         button {
             padding: 10px 20px;
             font-size: 16px;
@@ -30,29 +35,81 @@
             cursor: pointer;
             margin: 10px;
         }
+
         button:hover {
             background-color: #45a049;
         }
+
         h1 {
             font-size: 24px;
             margin-bottom: 20px;
         }
+
         .answer-btns {
             margin: 20px 0;
         }
+
         #endScreen {
             display: none;
         }
+
         .score-container {
             margin: 20px;
             font-size: 18px;
         }
+
         #startScreen {
             display: block;
+        }
+
+        /* Werbung */
+        #adBanner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 15px 0;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        #adBanner a {
+            color: #ff0;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        .ad-section {
+            margin: 10px;
+            background-color: #333;
+            padding: 15px;
+            color: white;
+            border-radius: 10px;
+        }
+
+        .ad-section button {
+            background-color: #ff5722;
+            color: white;
+        }
+
+        .ad-section button:hover {
+            background-color: #f44336;
         }
     </style>
 </head>
 <body>
+
+    <!-- Werbung Banner -->
+    <div id="adBanner">
+        <p>
+            Kaufen Sie Borussia Dortmund Trikots für nur 9 Cent das Stück! <br>
+            Oder holen Sie sich eine FC Bayern München Tasse für nur 149,99 €! <br>
+            CLASS-CARD für nur 2,99 €! 
+        </p>
+    </div>
 
     <!-- Startbildschirm -->
     <div class="quiz-container" id="startScreen">
@@ -78,6 +135,24 @@
         <p id="finalScore"></p>
         <p id="finalCoins"></p>
         <button onclick="restartQuiz()">Noch ein Quiz spielen</button>
+    </div>
+
+    <!-- Werbung für Borussia Dortmund Trikots -->
+    <div class="ad-section">
+        <p>Jetzt Borussia Dortmund Trikots für nur 9 Cent das Stück kaufen!</p>
+        <button onclick="window.open('https://www.bvb.de', '_blank')">Jetzt kaufen</button>
+    </div>
+
+    <!-- Werbung für FC Bayern München Tassen -->
+    <div class="ad-section">
+        <p>Hol dir eine FC Bayern München Tasse für nur 149,99 €!</p>
+        <button onclick="window.open('https://www.fcbayern.com', '_blank')">Jetzt kaufen</button>
+    </div>
+
+    <!-- Werbung für CLASS-CARD -->
+    <div class="ad-section">
+        <p>CLASS-CARD für nur 2,99 €! Hol dir deine jetzt!</p>
+        <button onclick="window.open('https://www.class-card.de', '_blank')">Jetzt kaufen</button>
     </div>
 
     <script>
@@ -212,22 +287,14 @@
             document.getElementById('quizContainer').style.display = 'none';  // Quiz-Container ausblenden
             document.getElementById('endScreen').style.display = 'block';    // Endscreen anzeigen
 
-            // Zeige die Ergebnisse an
-            document.getElementById('finalScore').innerText = `Du hast ${score} Punkte gesammelt.`;
-            document.getElementById('finalCoins').innerText = `Du hast ${coins} Münzen gesammelt.`;
-
-            // Geheimtipp kaufen, wenn genug Münzen
-            if (coins >= 30) {
-                let secretButton = document.createElement('button');
-                secretButton.innerText = "Geheimtipp kaufen (30 Münzen)";
-                secretButton.onclick = () => showSecretTip();
-                document.getElementById('endScreen').appendChild(secretButton);
-            }
+            document.getElementById('finalScore').innerText = "Du hast " + score + " Punkte gesammelt!";
+            document.getElementById('finalCoins').innerText = "Du hast " + coins + " Münzen gesammelt!";
         }
 
-        // Funktion für den Geheimtipp
-        function showSecretTip() {
-            alert("Der 1. FC Kaiserslautern ist der schlechteste Verein der Welt!");
+        // Funktion, um die Anzeige der Punkte und Münzen zu aktualisieren
+        function updateScoreDisplay() {
+            document.getElementById('score').innerText = "Punkte: " + score;
+            document.getElementById('coins').innerText = "Münzen: " + coins;
         }
 
         // Funktion zum Neustarten des Quiz
@@ -235,21 +302,12 @@
             currentQuestion = 0;
             score = 0;
             coins = 0;
-            document.getElementById('quizContainer').style.display = 'block';
+            updateScoreDisplay();
             document.getElementById('endScreen').style.display = 'none';
-            loadQuestion();
+            document.getElementById('startScreen').style.display = 'block';
         }
 
-        // Punktestand und Münzen anzeigen
-        function updateScoreDisplay() {
-            document.getElementById('score').innerText = `Punkte: ${score}`;
-            document.getElementById('coins').innerText = `Münzen: ${coins}`;
-        }
-
-        // Event-Listener für den Startbutton
-        document.getElementById('startButton').onclick = startQuiz;
-
+        document.getElementById('startButton').addEventListener('click', startQuiz);
     </script>
-
 </body>
 </html>
