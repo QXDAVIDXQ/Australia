@@ -40,6 +40,15 @@
         .answer-btns {
             margin: 20px 0;
         }
+        #feedback {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        #score {
+            font-size: 20px;
+            margin-top: 30px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -49,6 +58,8 @@
         <p id="question"></p>
         <div id="answers" class="answer-btns"></div>
         <button onclick="nextQuestion()">Nächste Frage</button>
+        <div id="feedback"></div>
+        <div id="score"></div>
     </div>
 
     <script>
@@ -118,13 +129,17 @@
         ];
 
         let currentQuestion = 0;
+        let score = 0;
 
         // Funktion zum Laden der Frage und Antworten
         function loadQuestion() {
             const questionElement = document.getElementById('question');
             const answersElement = document.getElementById('answers');
-            questionElement.innerText = quiz[currentQuestion].question;
+            const feedbackElement = document.getElementById('feedback');
+            const scoreElement = document.getElementById('score');
+            feedbackElement.innerHTML = ''; // Löscht vorherige Rückmeldungen
 
+            questionElement.innerText = quiz[currentQuestion].question;
             answersElement.innerHTML = ''; // Löscht vorherige Antwortmöglichkeiten
 
             // Mischen der Antworten
@@ -135,15 +150,21 @@
                 button.onclick = () => checkAnswer(answer);
                 answersElement.appendChild(button);
             });
+
+            // Zeige den Punktestand an
+            scoreElement.innerText = `Punktestand: ${score}`;
         }
 
         // Funktion zum Überprüfen der Antwort
         function checkAnswer(selectedAnswer) {
             const correctAnswer = quiz[currentQuestion].correctAnswer;
+            const feedbackElement = document.getElementById('feedback');
+
             if (selectedAnswer === correctAnswer) {
-                alert('Richtig!');
+                score++;
+                feedbackElement.innerText = 'Richtig!';
             } else {
-                alert('Leider falsch. Versuch es nochmal!');
+                feedbackElement.innerText = 'Leider falsch. Versuch es nochmal!';
             }
         }
 
@@ -160,8 +181,9 @@
         function nextQuestion() {
             currentQuestion++;
             if (currentQuestion >= quiz.length) {
-                alert('Quiz beendet! Du hast alle Fragen beantwortet.');
+                alert(`Quiz beendet! Du hast ${score} von ${quiz.length} Fragen richtig beantwortet.`);
                 currentQuestion = 0; // Zurücksetzen für ein neues Quiz
+                score = 0; // Punktestand zurücksetzen
             }
             loadQuestion();
         }
