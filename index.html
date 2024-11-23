@@ -237,4 +237,16 @@
             score = 0;
             coins = 0;
             document.getElementById('quizContainer').style.display = 'block';
-            document
+            document.getElementById('endScreen').style.display = 'none';
+            loadQuestion();
+        }
+
+        // Punkte und Münzen anzeigen
+        function updateScoreDisplay() {
+            document.getElementById('score').innerText = `Punkte: ${score}`;
+            document.getElementById('coins').innerText = `Münzen: ${coins}`;
+        }
+    </script>
+
+</body>
+</html>
