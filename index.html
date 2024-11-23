@@ -10,7 +10,7 @@
             margin: 0;
             padding: 0;
             color: #fff;
-            background-image: url('https://www.w3schools.com/w3images/sydney.jpg'); /* Sydney Architektur Hintergrund */
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Sydney_Opera_House_Sails.jpg/1280px-Sydney_Opera_House_Sails.jpg'); /* Sydney Architektur Hintergrund */
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -202,7 +202,7 @@
     <!-- Werbung für CLASS-CARD -->
     <div class="side-ad left" style="top: 10%; transform: translateY(0%);">
         <p>CLASS-CARD für nur 2,99 €! Hol dir deine jetzt!</p>
-        <button onclick="window.open('https://www.class-card.de', '_blank')">Jetzt kaufen</button>
+        <button onclick="window.open('https://davidpcolumeau.wixsite.com/class-cards', '_blank')">Jetzt kaufen</button>
     </div>
 
     <!-- Impressum Button -->
@@ -268,14 +268,12 @@
         let score = 0;
         let coins = 0;
 
-        // Funktion zum Starten des Quiz
         function startQuiz() {
             document.getElementById('startScreen').style.display = 'none';
             document.getElementById('quizContainer').style.display = 'block';
             loadQuestion();
         }
 
-        // Funktion zum Laden der aktuellen Frage
         function loadQuestion() {
             const questionElement = document.getElementById('question');
             const answersElement = document.getElementById('answers');
@@ -283,7 +281,6 @@
             questionElement.innerText = current.question;
             answersElement.innerHTML = '';
 
-            // Mischen der Antworten
             let shuffledAnswers = shuffleArray(current.answers);
             shuffledAnswers.forEach((answer, index) => {
                 const button = document.createElement('button');
@@ -293,20 +290,18 @@
             });
         }
 
-        // Funktion zum Überprüfen der Antwort
         function checkAnswer(selectedAnswer) {
             const correctAnswer = quiz[currentQuestion].correctAnswer;
             if (selectedAnswer === correctAnswer) {
                 score++;
-                coins += 10; // Bei richtiger Antwort erhält man 10 Münzen
+                coins += 10;
             } else {
-                coins -= 7; // Bei falscher Antwort werden 7 Münzen abgezogen
+                coins -= 7;
             }
             updateScoreDisplay();
             nextQuestion();
         }
 
-        // Funktion zum Mischen der Antworten
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -315,32 +310,27 @@
             return array;
         }
 
-        // Funktion für die nächste Frage
         function nextQuestion() {
             currentQuestion++;
             if (currentQuestion >= quiz.length) {
-                endQuiz(); // Quiz beenden, wenn alle Fragen beantwortet sind
+                endQuiz();
             } else {
                 loadQuestion();
             }
         }
 
-        // Funktion zum Beenden des Quiz
         function endQuiz() {
-            document.getElementById('quizContainer').style.display = 'none';  // Quiz-Container ausblenden
-            document.getElementById('endScreen').style.display = 'block';    // Endscreen anzeigen
-
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('endScreen').style.display = 'block';
             document.getElementById('finalScore').innerText = "Du hast " + score + " Punkte gesammelt!";
             document.getElementById('finalCoins').innerText = "Du hast " + coins + " Münzen gesammelt!";
         }
 
-        // Funktion zum Aktualisieren der Punktestand-Anzeige
         function updateScoreDisplay() {
             document.getElementById('score').innerText = "Punkte: " + score;
             document.getElementById('coins').innerText = "Münzen: " + coins;
         }
 
-        // Funktion für das Neustarten des Quiz
         function restartQuiz() {
             currentQuestion = 0;
             score = 0;
@@ -350,17 +340,14 @@
             document.getElementById('startScreen').style.display = 'block';
         }
 
-        // Impressum-Seite öffnen
         function openImpressumPage() {
-            document.getElementById('impressumPage').style.display = 'block'; // Zeige das Impressum
+            document.getElementById('impressumPage').style.display = 'block';
         }
 
-        // Zurück zum Quiz nach Impressum
         function closeImpressumPage() {
-            document.getElementById('impressumPage').style.display = 'none'; // Verstecke das Impressum
+            document.getElementById('impressumPage').style.display = 'none';
         }
 
-        // Event Listener für den Start-Button
         document.getElementById('startButton').addEventListener('click', startQuiz);
     </script>
 </body>
