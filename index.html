@@ -4,192 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mein Australien-Quiz</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            text-align: center;
-        }
-        .quiz-container {
-            background-color: white;
-            padding: 20px;
-            margin: 50px auto;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 600px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 10px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        .answer-btns {
-            margin: 20px 0;
-        }
-        #feedback {
-            font-size: 18px;
-            margin-top: 20px;
-        }
-        #score {
-            font-size: 20px;
-            margin-top: 30px;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="quiz-container">
-        <h1>Willkommen zum Australien-Quiz!</h1>
-        <p id="question"></p>
-        <div id="answers" class="answer-btns"></div>
-        <button onclick="nextQuestion()">Nächste Frage</button>
-        <div id="feedback"></div>
-        <div id="score"></div>
+    <div class="game-container">
+        <div class="quiz-container">
+            <h1>Willkommen zum Australien-Quiz!</h1>
+            <p id="question"></p>
+            <div id="answers" class="answer-btns"></div>
+            <button id="next-btn" onclick="nextQuestion()">Nächste Frage</button>
+            <div id="feedback"></div>
+            <div id="score">Punkte: 0</div>
+            <div id="coins">Münzen: 0</div>
+        </div>
+        <div id="celebration" class="celebration hidden">
+            <h2>Herzlichen Glückwunsch! Du hast das Spiel gewonnen!</h2>
+            <div class="fireworks"></div>
+            <button onclick="restartGame()">Nochmal spielen!</button>
+        </div>
     </div>
 
-    <script>
-        const quiz = [
-            {
-                question: "What is the world's sixth-largest country?",
-                correctAnswer: "Australia",
-                answers: ["Canada", "Australia", "Brazil", "India"]
-            },
-            {
-                question: "Approximately how many people live in Australia?",
-                correctAnswer: "25 million",
-                answers: ["20 million", "25 million", "30 million", "35 million"]
-            },
-            {
-                question: "What is the capital city of Australia?",
-                correctAnswer: "Canberra",
-                answers: ["Sydney", "Melbourne", "Canberra", "Perth"]
-            },
-            {
-                question: "What is the official language spoken in Australia?",
-                correctAnswer: "English",
-                answers: ["French", "English", "Spanish", "German"]
-            },
-            {
-                question: "Which city is the capital of Western Australia?",
-                correctAnswer: "Perth",
-                answers: ["Sydney", "Perth", "Adelaide", "Brisbane"]
-            },
-            {
-                question: "Name three famous attractions in Perth.",
-                correctAnswer: "Kings Park, Perth Zoo, Swan River",
-                answers: ["Eureka Tower, Botanic Gardens, Great Ocean Road", 
-                          "Kings Park, Perth Zoo, Swan River", 
-                          "Opera House, Darling Harbour, Bondi Beach", 
-                          "Sydney Harbour Bridge, Great Barrier Reef, Uluru"]
-            },
-            {
-                question: "Which two famous native animals can be found in Australia?",
-                correctAnswer: "Kangaroos and koalas",
-                answers: ["Elephants and tigers", 
-                          "Kangaroos and koalas", 
-                          "Pandas and monkeys", 
-                          "Lions and giraffes"]
-            },
-            {
-                question: "How old is the aboriginal culture in Australia?",
-                correctAnswer: "Over 65,000 years old",
-                answers: ["Over 10,000 years old", 
-                          "Over 30,000 years old", 
-                          "Over 65,000 years old", 
-                          "Over 100,000 years old"]
-            },
-            {
-                question: "What is the name of the largest coral reef system in the world, located in Australia?",
-                correctAnswer: "The Great Barrier Reef",
-                answers: ["Great Barrier Reef", 
-                          "Blue Reef", 
-                          "Coral Sea Reef", 
-                          "Bali Reef"]
-            },
-            {
-                question: "Which Australian city has the world's largest tram system?",
-                correctAnswer: "Melbourne",
-                answers: ["Sydney", "Melbourne", "Brisbane", "Adelaide"]
-            }
-        ];
-
-        let currentQuestion = 0;
-        let score = 0;
-
-        // Funktion zum Laden der Frage und Antworten
-        function loadQuestion() {
-            const questionElement = document.getElementById('question');
-            const answersElement = document.getElementById('answers');
-            const feedbackElement = document.getElementById('feedback');
-            const scoreElement = document.getElementById('score');
-            feedbackElement.innerHTML = ''; // Löscht vorherige Rückmeldungen
-
-            questionElement.innerText = quiz[currentQuestion].question;
-            answersElement.innerHTML = ''; // Löscht vorherige Antwortmöglichkeiten
-
-            // Mischen der Antworten
-            let shuffledAnswers = shuffleArray(quiz[currentQuestion].answers);
-            shuffledAnswers.forEach((answer, index) => {
-                const button = document.createElement('button');
-                button.innerText = answer;
-                button.onclick = () => checkAnswer(answer);
-                answersElement.appendChild(button);
-            });
-
-            // Zeige den Punktestand an
-            scoreElement.innerText = `Punktestand: ${score}`;
-        }
-
-        // Funktion zum Überprüfen der Antwort
-        function checkAnswer(selectedAnswer) {
-            const correctAnswer = quiz[currentQuestion].correctAnswer;
-            const feedbackElement = document.getElementById('feedback');
-
-            if (selectedAnswer === correctAnswer) {
-                score++;
-                feedbackElement.innerText = 'Richtig!';
-            } else {
-                feedbackElement.innerText = 'Leider falsch. Versuch es nochmal!';
-            }
-        }
-
-        // Funktion zum Mischen der Antworten
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        // Funktion für die nächste Frage
-        function nextQuestion() {
-            currentQuestion++;
-            if (currentQuestion >= quiz.length) {
-                alert(`Quiz beendet! Du hast ${score} von ${quiz.length} Fragen richtig beantwortet.`);
-                currentQuestion = 0; // Zurücksetzen für ein neues Quiz
-                score = 0; // Punktestand zurücksetzen
-            }
-            loadQuestion();
-        }
-
-        loadQuestion(); // Die erste Frage beim Laden der Seite anzeigen
-    </script>
+    <script src="app.js"></script>
 
 </body>
 </html>
