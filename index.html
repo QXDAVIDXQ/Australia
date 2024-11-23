@@ -47,11 +47,22 @@
             margin: 20px;
             font-size: 18px;
         }
+        #startScreen {
+            display: block;
+        }
     </style>
 </head>
 <body>
 
-    <div class="quiz-container" id="quizContainer">
+    <!-- Startbildschirm -->
+    <div class="quiz-container" id="startScreen">
+        <h1>Willkommen zum Australien-Quiz!</h1>
+        <p>Drücke den Button, um das Spiel zu starten.</p>
+        <button onclick="startQuiz()">Spiel starten</button>
+    </div>
+
+    <!-- Quiz-Bereich -->
+    <div class="quiz-container" id="quizContainer" style="display: none;">
         <h1>Willkommen zum Australien-Quiz!</h1>
         <p id="question"></p>
         <div id="answers" class="answer-btns"></div>
@@ -62,7 +73,8 @@
         <button onclick="nextQuestion()" style="display:none;">Nächste Frage</button>
     </div>
 
-    <div class="quiz-container" id="endScreen">
+    <!-- Endbildschirm -->
+    <div class="quiz-container" id="endScreen" style="display: none;">
         <h1>Herzlichen Glückwunsch!</h1>
         <p id="finalScore"></p>
         <p id="finalCoins"></p>
@@ -139,6 +151,14 @@
         let score = 0;
         let coins = 0;
 
+        // Funktion, um das Quiz zu starten
+        function startQuiz() {
+            document.getElementById('startScreen').style.display = 'none';  // Startbildschirm ausblenden
+            document.getElementById('quizContainer').style.display = 'block';  // Quiz-Container anzeigen
+            loadQuestion();  // Erste Frage laden
+        }
+
+        // Funktion zum Laden der Frage und Antworten
         function loadQuestion() {
             const questionElement = document.getElementById('question');
             const answersElement = document.getElementById('answers');
@@ -182,4 +202,39 @@
         function nextQuestion() {
             currentQuestion++;
             if (currentQuestion >= quiz.length) {
-                endQu
+                endQuiz(); // Quiz beenden, wenn alle Fragen beantwortet sind
+            } else {
+                loadQuestion();
+            }
+        }
+
+        // Funktion, um das Quiz zu beenden
+        function endQuiz() {
+            document.getElementById('quizContainer').style.display = 'none';  // Quiz-Container ausblenden
+            document.getElementById('endScreen').style.display = 'block';    // Endscreen anzeigen
+
+            // Zeige die Ergebnisse an
+            document.getElementById('finalScore').innerText = `Du hast ${score} Punkte gesammelt.`;
+            document.getElementById('finalCoins').innerText = `Du hast ${coins} Münzen gesammelt.`;
+
+            // Geheimtipp kaufen, wenn genug Münzen
+            if (coins >= 30) {
+                let secretButton = document.createElement('button');
+                secretButton.innerText = "Geheimtipp kaufen (30 Münzen)";
+                secretButton.onclick = () => showSecretTip();
+                document.getElementById('endScreen').appendChild(secretButton);
+            }
+        }
+
+        // Funktion für den Geheimtipp
+        function showSecretTip() {
+            alert("Der 1. FC Kaiserslautern ist der schlechteste Verein der Welt!");
+        }
+
+        // Funktion zum Neustarten des Quiz
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            coins = 0;
+            document.getElementById('quizContainer').style.display = 'block';
+            document
