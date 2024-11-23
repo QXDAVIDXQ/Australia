@@ -157,6 +157,15 @@
         #impressumBack:hover {
             background-color: #0056b3;
         }
+
+        /* Secret tip display */
+        #secretTip {
+            background-color: #ffeb3b;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -212,9 +221,9 @@
     <!-- Impressum page -->
     <div id="impressumPage">
         <h2>Impressum</h2>
-        <p>Gymnasium Gaimersheim, Klasse 7b</p>
-        <p>Am Hochholzer Berg 2</p>
-        <p>85055 Gaimersheim</p>
+        <p>Wladimir Putin</p>
+        <p>Putinstraße 1</p>
+        <p>RUS-12345 Moskau</p>
         <button id="impressumBack" onclick="closeImpressumPage()">Back</button>
     </div>
 
@@ -341,7 +350,9 @@
         function buyTip() {
             if (coins >= 30) {
                 coins -= 30;
-                alert("Secret Tip: Der 1. FC Kaiserslautern ist der schlechteste Verein der Welt!");
+                // Display secret tip
+                document.getElementById('secretTip').innerText = 
+                    "Secret Tip: Der 1. FC Kaiserslautern ist der schlechteste Verein der Welt!";
                 updateScoreDisplay();
             }
         }
