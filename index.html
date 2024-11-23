@@ -63,7 +63,7 @@
         }
 
         /* Werbung */
-        #adBanner {
+        .ad-banner {
             position: fixed;
             bottom: 0;
             left: 0;
@@ -75,22 +75,26 @@
             text-align: center;
         }
 
-        #adBanner a {
-            color: #ff0;
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: bold;
+        /* Anzeigen an den Seiten */
+        .side-ad {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 10;
         }
 
-        .ad-section {
-            display: inline-block;
-            width: 30%;
-            margin: 10px;
-            background-color: #333;
-            padding: 15px;
-            color: white;
-            border-radius: 10px;
-            box-sizing: border-box;
+        .side-ad.left {
+            left: 0;
+        }
+
+        .side-ad.right {
+            right: 0;
         }
 
         .ad-section button {
@@ -102,42 +106,24 @@
             background-color: #f44336;
         }
 
-        .ad-section p {
-            margin: 0;
-        }
-
         /* Impressum */
         #impressumLink {
             margin-top: 20px;
-            font-size: 14px;
+            font-size: 18px;
             color: #333;
             text-decoration: none;
+            padding: 15px 30px;
+            background-color: #007BFF;
+            border-radius: 5px;
+            display: inline-block;
         }
 
-        #impressum {
-            display: none;
-            font-size: 18px;
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #f4f4f4;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 500px;
-            margin: 20px auto;
+        #impressumLink:hover {
+            background-color: #0056b3;
         }
-
     </style>
 </head>
 <body>
-
-    <!-- Werbung Banner -->
-    <div id="adBanner">
-        <p>
-            Kaufen Sie Borussia Dortmund Trikots für nur 9 Cent das Stück! <br>
-            Oder holen Sie sich eine FC Bayern München Tasse für nur 149,99 €! <br>
-            CLASS-CARD für nur 2,99 €! 
-        </p>
-    </div>
 
     <!-- Startbildschirm -->
     <div class="quiz-container" id="startScreen">
@@ -166,32 +152,25 @@
     </div>
 
     <!-- Werbung für Borussia Dortmund Trikots -->
-    <div class="ad-section">
+    <div class="side-ad left">
         <p>Jetzt Borussia Dortmund Trikots für nur 9 Cent das Stück kaufen!</p>
         <button onclick="window.open('https://www.bvb.de', '_blank')">Jetzt kaufen</button>
     </div>
 
     <!-- Werbung für FC Bayern München Tassen -->
-    <div class="ad-section">
+    <div class="side-ad right">
         <p>Hol dir eine FC Bayern München Tasse für nur 149,99 €!</p>
         <button onclick="window.open('https://www.fcbayern.com', '_blank')">Jetzt kaufen</button>
     </div>
 
     <!-- Werbung für CLASS-CARD -->
-    <div class="ad-section">
+    <div class="side-ad left" style="top: 10%; transform: translateY(0%);">
         <p>CLASS-CARD für nur 2,99 €! Hol dir deine jetzt!</p>
         <button onclick="window.open('https://www.class-card.de', '_blank')">Jetzt kaufen</button>
     </div>
 
-    <!-- Impressum Link -->
-    <a id="impressumLink" href="#" onclick="showImpressum()">Impressum</a>
-
-    <!-- Impressum -->
-    <div id="impressum">
-        <p>1. Zeile: Gymnasium Gaimersheim, Klasse 7b</p>
-        <p>2. Zeile: Am Hochholzer Berg 2</p>
-        <p>3. Zeile: 85055 Gaimersheim</p>
-    </div>
+    <!-- Impressum Button -->
+    <a id="impressumLink" href="#" onclick="openImpressumPage()">Impressum</a>
 
     <script>
         const quiz = [
@@ -274,84 +253,4 @@
         function loadQuestion() {
             const questionElement = document.getElementById('question');
             const answersElement = document.getElementById('answers');
-            questionElement.innerText = quiz[currentQuestion].question;
-
-            answersElement.innerHTML = ''; // Löscht vorherige Antwortmöglichkeiten
-
-            // Mischen der Antworten
-            let shuffledAnswers = shuffleArray(quiz[currentQuestion].answers);
-            shuffledAnswers.forEach((answer, index) => {
-                const button = document.createElement('button');
-                button.innerText = answer;
-                button.onclick = () => checkAnswer(answer);
-                answersElement.appendChild(button);
-            });
-        }
-
-        // Funktion zum Überprüfen der Antwort
-        function checkAnswer(selectedAnswer) {
-            const correctAnswer = quiz[currentQuestion].correctAnswer;
-            if (selectedAnswer === correctAnswer) {
-                score++;
-                coins += 10; // Bei richtiger Antwort erhält man 10 Münzen
-            } else {
-                coins -= 7; // Bei falscher Antwort werden 7 Münzen abgezogen
-            }
-            updateScoreDisplay();
-            nextQuestion();
-        }
-
-        // Funktion zum Mischen der Antworten
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        // Funktion für die nächste Frage
-        function nextQuestion() {
-            currentQuestion++;
-            if (currentQuestion >= quiz.length) {
-                endQuiz(); // Quiz beenden, wenn alle Fragen beantwortet sind
-            } else {
-                loadQuestion();
-            }
-        }
-
-        // Funktion, um das Quiz zu beenden
-        function endQuiz() {
-            document.getElementById('quizContainer').style.display = 'none';  // Quiz-Container ausblenden
-            document.getElementById('endScreen').style.display = 'block';    // Endscreen anzeigen
-
-            document.getElementById('finalScore').innerText = "Du hast " + score + " Punkte gesammelt!";
-            document.getElementById('finalCoins').innerText = "Du hast " + coins + " Münzen gesammelt!";
-        }
-
-        // Funktion, um die Anzeige der Punkte und Münzen zu aktualisieren
-        function updateScoreDisplay() {
-            document.getElementById('score').innerText = "Punkte: " + score;
-            document.getElementById('coins').innerText = "Münzen: " + coins;
-        }
-
-        // Funktion zum Neustarten des Quiz
-        function restartQuiz() {
-            currentQuestion = 0;
-            score = 0;
-            coins = 0;
-            updateScoreDisplay();
-            document.getElementById('endScreen').style.display = 'none';
-            document.getElementById('startScreen').style.display = 'block';
-        }
-
-        // Funktion zum Anzeigen des Impressums
-        function showImpressum() {
-            document.getElementById('impressum').style.display = 'block';
-        }
-
-        // Event Listener für den Start-Button
-        document.getElementById('startButton').addEventListener('click', startQuiz);
-    </script>
-</body>
-</html>
+            questionElement.innerText = quiz[currentQuestion].q
