@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mein Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+        }
+        .quiz-container {
+            background-color: white;
+            padding: 20px;
+            margin: 50px auto;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .answer-btns {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+        <h1>Willkommen zum Quiz!</h1>
+        <p id="question"></p>
+        <div id="answers" class="answer-btns"></div>
+        <button onclick="nextQuestion()">Nächste Frage</button>
+    </div>
+
+    <script>
+        const quiz = [
+            {
+                question: "Was ist 2 + 2?",
+                answers: ["3", "4", "5"],
+                correct: 1
+            },
+            {
+                question: "Was ist die Hauptstadt von Deutschland?",
+                answers: ["Berlin", "München", "Hamburg"],
+                correct: 0
+            },
+            {
+                question: "Wie viele Kontinente gibt es?",
+                answers: ["5", "6", "7"],
+                correct: 2
+            }
+        ];
+
+        let currentQuestion = 0;
+
+        // Frage laden
+        function loadQuestion() {
+            const questionElement = document.getElementById('question');
+            const answersElement = document.getElementById('answers');
+            questionElement.innerText = quiz[currentQuestion].question;
+
+            answersElement.innerHTML = ''; // Löscht vorherige Antwortmöglichkeiten
+            quiz[currentQuestion].answers.forEach((answer, index) => {
+                const button = document.createElement('button');
+                button.innerText = answer;
+                button.onclick = () => checkAnswer(index);
+                answersElement.appendChild(button);
+            });
+        }
+
+        // Antwort überprüfen
+        function checkAnswer(selectedAnswer) {
+            const correctAnswer = quiz[currentQuestion].correct;
+            if (selectedAnswer === correctAnswer) {
+                alert('Richtig!');
+            } else {
+                alert('Leider falsch. Versuch es nochmal!');
+            }
+        }
+
+        // Nächste Frage anzeigen
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion >= quiz.length) {
+                alert('Quiz beendet! Du hast alle Fragen beantwortet.');
+                currentQuestion = 0; // Zurücksetzen für ein neues Quiz
+            }
+            loadQuestion();
+        }
+
+        loadQuestion(); // Die erste Frage beim Laden der Seite anzeigen
+    </script>
+
+</body>
+</html>
