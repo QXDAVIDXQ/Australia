@@ -184,6 +184,7 @@
         <h1>Herzlichen Glückwunsch!</h1>
         <p id="finalScore"></p>
         <p id="finalCoins"></p>
+        <p id="tipOffer"></p>
         <button onclick="restartQuiz()">Noch ein Quiz spielen</button>
     </div>
 
@@ -255,12 +256,14 @@
                           "Sydney Harbour Bridge, Great Barrier Reef, Uluru"]
             },
             {
-                question: "Which two famous native animals can be found in Australia?",
-                correctAnswer: "Kangaroos and koalas",
-                answers: ["Elephants and tigers", 
-                          "Kangaroos and koalas", 
-                          "Lions and tigers", 
-                          "Bears and pandas"]
+                question: "Which Australian animal is famous for hopping?",
+                correctAnswer: "Kangaroo",
+                answers: ["Koala", "Kangaroo", "Wombat", "Platypus"]
+            },
+            {
+                question: "What is the largest reef system in Australia?",
+                correctAnswer: "Great Barrier Reef",
+                answers: ["Coral Sea", "Great Barrier Reef", "Ningaloo Reef", "Tasman Sea"]
             }
         ];
 
@@ -324,6 +327,23 @@
             document.getElementById('endScreen').style.display = 'block';
             document.getElementById('finalScore').innerText = "Du hast " + score + " Punkte gesammelt!";
             document.getElementById('finalCoins').innerText = "Du hast " + coins + " Münzen gesammelt!";
+
+            // Geheimtipp-Angebot
+            if (coins >= 30) {
+                document.getElementById('tipOffer').innerHTML = 
+                    `Du kannst einen Geheimtipp kaufen für 30 Münzen! <button onclick="buyTip()">Jetzt kaufen</button>`;
+            } else {
+                document.getElementById('tipOffer').innerText = 
+                    "Du hast nicht genug Münzen für einen Geheimtipp!";
+            }
+        }
+
+        function buyTip() {
+            if (coins >= 30) {
+                coins -= 30;
+                alert("Geheimtipp: Der 1. FC Kaiserslautern ist der schlechteste Verein der Welt!");
+                updateScoreDisplay();
+            }
         }
 
         function updateScoreDisplay() {
