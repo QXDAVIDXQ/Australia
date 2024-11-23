@@ -58,7 +58,7 @@
     <div class="quiz-container" id="startScreen">
         <h1>Willkommen zum Australien-Quiz!</h1>
         <p>Drücke den Button, um das Spiel zu starten.</p>
-        <button onclick="startQuiz()">Spiel starten</button>
+        <button id="startButton">Spiel starten</button>
     </div>
 
     <!-- Quiz-Bereich -->
@@ -70,7 +70,6 @@
             <p id="score">Punkte: 0</p>
             <p id="coins">Münzen: 0</p>
         </div>
-        <button onclick="nextQuestion()" style="display:none;">Nächste Frage</button>
     </div>
 
     <!-- Endbildschirm -->
@@ -241,11 +240,15 @@
             loadQuestion();
         }
 
-        // Punkte und Münzen anzeigen
+        // Punktestand und Münzen anzeigen
         function updateScoreDisplay() {
             document.getElementById('score').innerText = `Punkte: ${score}`;
             document.getElementById('coins').innerText = `Münzen: ${coins}`;
         }
+
+        // Event-Listener für den Startbutton
+        document.getElementById('startButton').onclick = startQuiz;
+
     </script>
 
 </body>
