@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mein Australien-Quiz</title>
+    <title>My Australia Quiz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             color: #fff;
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Sydney_Opera_House_Sails.jpg/1280px-Sydney_Opera_House_Sails.jpg'); /* Sydney Architektur Hintergrund */
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Sydney_Opera_House_Sails.jpg/1280px-Sydney_Opera_House_Sails.jpg'); /* Sydney Architecture background */
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
         }
 
         .quiz-container {
-            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent Hintergrund für besseren Kontrast */
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for better contrast */
             padding: 20px;
             margin: 50px auto;
             border-radius: 10px;
@@ -94,7 +94,7 @@
             background-color: #f44336;
         }
 
-        /* Impressum-Button oben rechts */
+        /* Impressum button top-right */
         #impressumLink {
             position: fixed;
             top: 20px;
@@ -112,7 +112,7 @@
             background-color: #0056b3;
         }
 
-        /* Mobilversion */
+        /* Mobile version */
         @media only screen and (max-width: 768px) {
             .side-ad {
                 width: 150px;
@@ -124,7 +124,7 @@
             }
         }
 
-        /* Impressum-Seite Design */
+        /* Impressum page design */
         #impressumPage {
             display: none;
             background-color: rgba(0, 0, 0, 0.9);
@@ -161,65 +161,65 @@
 </head>
 <body>
 
-    <!-- Startbildschirm -->
+    <!-- Start screen -->
     <div class="quiz-container" id="startScreen">
-        <h1>Willkommen zum Australien-Quiz!</h1>
-        <p>Drücke den Button, um das Spiel zu starten.</p>
-        <button id="startButton">Spiel starten</button>
+        <h1>Welcome to the Australia Quiz!</h1>
+        <p>Press the button to start the game.</p>
+        <button id="startButton">Start Game</button>
     </div>
 
-    <!-- Quiz-Bereich -->
+    <!-- Quiz section -->
     <div class="quiz-container" id="quizContainer" style="display: none;">
-        <h1>Willkommen zum Australien-Quiz!</h1>
+        <h1>Welcome to the Australia Quiz!</h1>
         <p id="question"></p>
         <div id="answers" class="answer-btns"></div>
         <div class="score-container">
-            <p id="score">Punkte: 0</p>
-            <p id="coins">Münzen: 0</p>
+            <p id="score">Points: 0</p>
+            <p id="coins">Coins: 0</p>
         </div>
     </div>
 
-    <!-- Endbildschirm -->
+    <!-- End screen -->
     <div class="quiz-container" id="endScreen" style="display: none;">
-        <h1>Herzlichen Glückwunsch!</h1>
+        <h1>Congratulations!</h1>
         <p id="finalScore"></p>
         <p id="finalCoins"></p>
         <p id="tipOffer"></p>
-        <button onclick="restartQuiz()">Noch ein Quiz spielen</button>
+        <button onclick="restartQuiz()">Play Again</button>
     </div>
 
-    <!-- Werbung für Borussia Dortmund Trikots -->
+    <!-- Ads for Borussia Dortmund Jerseys -->
     <div class="side-ad left">
-        <p>Jetzt Borussia Dortmund Trikots für nur 9 Cent das Stück kaufen!</p>
-        <button onclick="window.open('https://www.bvb.de', '_blank')">Jetzt kaufen</button>
+        <p>Buy Borussia Dortmund Jerseys for only 9 cents each!</p>
+        <button onclick="window.open('https://www.bvb.de', '_blank')">Buy Now</button>
     </div>
 
-    <!-- Werbung für FC Bayern München Tassen -->
+    <!-- Ads for FC Bayern Munich Mugs -->
     <div class="side-ad right">
-        <p>Hol dir eine FC Bayern München Tasse für nur 149,99 €!</p>
-        <button onclick="window.open('https://www.fcbayern.com', '_blank')">Jetzt kaufen</button>
+        <p>Get an FC Bayern Munich Mug for only 149.99€!</p>
+        <button onclick="window.open('https://www.fcbayern.com', '_blank')">Buy Now</button>
     </div>
 
-    <!-- Werbung für CLASS-CARD -->
+    <!-- Ads for CLASS-CARD -->
     <div class="side-ad left" style="top: 10%; transform: translateY(0%);">
-        <p>CLASS-CARD für nur 2,99 €! Hol dir deine jetzt!</p>
-        <button onclick="window.open('https://davidpcolumeau.wixsite.com/class-cards', '_blank')">Jetzt kaufen</button>
+        <p>Get your CLASS-CARD for just 2.99€!</p>
+        <button onclick="window.open('https://davidpcolumeau.wixsite.com/class-cards', '_blank')">Buy Now</button>
     </div>
 
     <!-- Impressum Button -->
     <a id="impressumLink" href="javascript:void(0)" onclick="openImpressumPage()">Impressum</a>
 
-    <!-- Impressum-Seite -->
+    <!-- Impressum page -->
     <div id="impressumPage">
         <h2>Impressum</h2>
         <p>Gymnasium Gaimersheim, Klasse 7b</p>
         <p>Am Hochholzer Berg 2</p>
         <p>85055 Gaimersheim</p>
-        <button id="impressumBack" onclick="closeImpressumPage()">Zurück</button>
+        <button id="impressumBack" onclick="closeImpressumPage()">Back</button>
     </div>
 
     <script>
-        // Deine JavaScript-Funktionalitäten
+        // Your JavaScript functionalities
 
         const quiz = [
             {
@@ -325,30 +325,30 @@
         function endQuiz() {
             document.getElementById('quizContainer').style.display = 'none';
             document.getElementById('endScreen').style.display = 'block';
-            document.getElementById('finalScore').innerText = "Du hast " + score + " Punkte gesammelt!";
-            document.getElementById('finalCoins').innerText = "Du hast " + coins + " Münzen gesammelt!";
+            document.getElementById('finalScore').innerText = "You collected " + score + " points!";
+            document.getElementById('finalCoins').innerText = "You collected " + coins + " coins!";
 
-            // Geheimtipp-Angebot
+            // Secret tip offer
             if (coins >= 30) {
                 document.getElementById('tipOffer').innerHTML = 
-                    `Du kannst einen Geheimtipp kaufen für 30 Münzen! <button onclick="buyTip()">Jetzt kaufen</button>`;
+                    `You can buy a secret tip for 30 coins! <button onclick="buyTip()">Buy Now</button>`;
             } else {
                 document.getElementById('tipOffer').innerText = 
-                    "Du hast nicht genug Münzen für einen Geheimtipp!";
+                    "You don't have enough coins for a secret tip!";
             }
         }
 
         function buyTip() {
             if (coins >= 30) {
                 coins -= 30;
-                alert("Geheimtipp: Der 1. FC Kaiserslautern ist der schlechteste Verein der Welt!");
+                alert("Secret Tip: Der 1. FC Kaiserslautern ist der schlechteste Verein der Welt!");
                 updateScoreDisplay();
             }
         }
 
         function updateScoreDisplay() {
-            document.getElementById('score').innerText = "Punkte: " + score;
-            document.getElementById('coins').innerText = "Münzen: " + coins;
+            document.getElementById('score').innerText = "Points: " + score;
+            document.getElementById('coins').innerText = "Coins: " + coins;
         }
 
         function restartQuiz() {
