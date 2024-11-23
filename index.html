@@ -83,11 +83,14 @@
         }
 
         .ad-section {
+            display: inline-block;
+            width: 30%;
             margin: 10px;
             background-color: #333;
             padding: 15px;
             color: white;
             border-radius: 10px;
+            box-sizing: border-box;
         }
 
         .ad-section button {
@@ -98,6 +101,31 @@
         .ad-section button:hover {
             background-color: #f44336;
         }
+
+        .ad-section p {
+            margin: 0;
+        }
+
+        /* Impressum */
+        #impressumLink {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        #impressum {
+            display: none;
+            font-size: 18px;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
     </style>
 </head>
 <body>
@@ -153,6 +181,16 @@
     <div class="ad-section">
         <p>CLASS-CARD für nur 2,99 €! Hol dir deine jetzt!</p>
         <button onclick="window.open('https://www.class-card.de', '_blank')">Jetzt kaufen</button>
+    </div>
+
+    <!-- Impressum Link -->
+    <a id="impressumLink" href="#" onclick="showImpressum()">Impressum</a>
+
+    <!-- Impressum -->
+    <div id="impressum">
+        <p>1. Zeile: Gymnasium Gaimersheim, Klasse 7b</p>
+        <p>2. Zeile: Am Hochholzer Berg 2</p>
+        <p>3. Zeile: 85055 Gaimersheim</p>
     </div>
 
     <script>
@@ -225,11 +263,11 @@
         let score = 0;
         let coins = 0;
 
-        // Funktion, um das Quiz zu starten
+        // Funktion zum Starten des Spiels
         function startQuiz() {
-            document.getElementById('startScreen').style.display = 'none';  // Startbildschirm ausblenden
-            document.getElementById('quizContainer').style.display = 'block';  // Quiz-Container anzeigen
-            loadQuestion();  // Erste Frage laden
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizContainer').style.display = 'block';
+            loadQuestion();
         }
 
         // Funktion zum Laden der Frage und Antworten
@@ -242,7 +280,7 @@
 
             // Mischen der Antworten
             let shuffledAnswers = shuffleArray(quiz[currentQuestion].answers);
-            shuffledAnswers.forEach((answer) => {
+            shuffledAnswers.forEach((answer, index) => {
                 const button = document.createElement('button');
                 button.innerText = answer;
                 button.onclick = () => checkAnswer(answer);
@@ -254,10 +292,10 @@
         function checkAnswer(selectedAnswer) {
             const correctAnswer = quiz[currentQuestion].correctAnswer;
             if (selectedAnswer === correctAnswer) {
-                score += 10;  // 10 Punkte für richtige Antwort
-                coins += 5;   // 5 Münzen für richtige Antwort
+                score++;
+                coins += 10; // Bei richtiger Antwort erhält man 10 Münzen
             } else {
-                coins -= 7;   // 7 Münzen abziehen bei falscher Antwort
+                coins -= 7; // Bei falscher Antwort werden 7 Münzen abgezogen
             }
             updateScoreDisplay();
             nextQuestion();
@@ -307,6 +345,12 @@
             document.getElementById('startScreen').style.display = 'block';
         }
 
+        // Funktion zum Anzeigen des Impressums
+        function showImpressum() {
+            document.getElementById('impressum').style.display = 'block';
+        }
+
+        // Event Listener für den Start-Button
         document.getElementById('startButton').addEventListener('click', startQuiz);
     </script>
 </body>
