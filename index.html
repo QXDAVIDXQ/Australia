@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mein Quiz</title>
+    <title>Mein Australien-Quiz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -45,7 +45,7 @@
 <body>
 
     <div class="quiz-container">
-        <h1>Willkommen zum Quiz!</h1>
+        <h1>Willkommen zum Australien-Quiz!</h1>
         <p id="question"></p>
         <div id="answers" class="answer-btns"></div>
         <button onclick="nextQuestion()">Nächste Frage</button>
@@ -54,61 +54,32 @@
     <script>
         const quiz = [
             {
-                question: "Was ist 2 + 2?",
-                answers: ["3", "4", "5"],
+                question: "What is the world's sixth-largest country?",
+                answers: ["Canada", "Australia", "Brazil"],
                 correct: 1
             },
             {
-                question: "Was ist die Hauptstadt von Deutschland?",
-                answers: ["Berlin", "München", "Hamburg"],
-                correct: 0
+                question: "Approximately how many people live in Australia?",
+                answers: ["10 million", "25 million", "40 million"],
+                correct: 1
             },
             {
-                question: "Wie viele Kontinente gibt es?",
-                answers: ["5", "6", "7"],
+                question: "What is the capital city of Australia?",
+                answers: ["Sydney", "Melbourne", "Canberra"],
                 correct: 2
-            }
-        ];
-
-        let currentQuestion = 0;
-
-        // Frage laden
-        function loadQuestion() {
-            const questionElement = document.getElementById('question');
-            const answersElement = document.getElementById('answers');
-            questionElement.innerText = quiz[currentQuestion].question;
-
-            answersElement.innerHTML = ''; // Löscht vorherige Antwortmöglichkeiten
-            quiz[currentQuestion].answers.forEach((answer, index) => {
-                const button = document.createElement('button');
-                button.innerText = answer;
-                button.onclick = () => checkAnswer(index);
-                answersElement.appendChild(button);
-            });
-        }
-
-        // Antwort überprüfen
-        function checkAnswer(selectedAnswer) {
-            const correctAnswer = quiz[currentQuestion].correct;
-            if (selectedAnswer === correctAnswer) {
-                alert('Richtig!');
-            } else {
-                alert('Leider falsch. Versuch es nochmal!');
-            }
-        }
-
-        // Nächste Frage anzeigen
-        function nextQuestion() {
-            currentQuestion++;
-            if (currentQuestion >= quiz.length) {
-                alert('Quiz beendet! Du hast alle Fragen beantwortet.');
-                currentQuestion = 0; // Zurücksetzen für ein neues Quiz
-            }
-            loadQuestion();
-        }
-
-        loadQuestion(); // Die erste Frage beim Laden der Seite anzeigen
-    </script>
-
-</body>
-</html>
+            },
+            {
+                question: "What is the official language spoken in Australia?",
+                answers: ["French", "English", "Spanish"],
+                correct: 1
+            },
+            {
+                question: "Which city is the capital of Western Australia?",
+                answers: ["Sydney", "Perth", "Adelaide"],
+                correct: 1
+            },
+            {
+                question: "Name three famous attractions in Perth.",
+                answers: ["Eureka Tower, Botanic Gardens, Great Ocean Road", "Kings Park, Perth Zoo, Swan River", "Opera House, Darling Harbour, Bondi Beach"],
+                correct: 1
+       
