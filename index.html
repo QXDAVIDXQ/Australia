@@ -7,22 +7,28 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            text-align: center;
             margin: 0;
             padding: 0;
-            position: relative;
+            color: #fff;
+            background-image: url('https://www.w3schools.com/w3images/sydney.jpg'); /* Sydney Architektur Hintergrund */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
 
         .quiz-container {
-            background-color: white;
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent Hintergrund für besseren Kontrast */
             padding: 20px;
             margin: 50px auto;
             border-radius: 10px;
             width: 80%;
             max-width: 600px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        h1, p {
+            font-size: 24px;
         }
 
         button {
@@ -38,11 +44,6 @@
 
         button:hover {
             background-color: #45a049;
-        }
-
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
         }
 
         .answer-btns {
@@ -62,20 +63,6 @@
             display: block;
         }
 
-        /* Werbung */
-        .ad-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #333;
-            color: white;
-            padding: 15px 0;
-            font-size: 18px;
-            text-align: center;
-        }
-
-        /* Anzeigen an den Seiten für Desktop */
         .side-ad {
             position: fixed;
             top: 50%;
@@ -107,46 +94,11 @@
             background-color: #f44336;
         }
 
-        /* Mobilversion */
-        @media only screen and (max-width: 768px) {
-            .side-ad {
-                width: 150px;
-                font-size: 14px;
-                position: relative;
-                top: auto;
-                transform: none;
-                margin: 10px auto;
-            }
-
-            .ad-banner {
-                position: relative;
-                bottom: auto;
-                top: auto;
-            }
-
-            .side-ad.left,
-            .side-ad.right {
-                position: relative;
-                margin: 0;
-                top: auto;
-                left: auto;
-                right: auto;
-            }
-
-            /* Werbung unter dem Quiz auf mobilen Geräten */
-            .ad-banner {
-                position: relative;
-                bottom: auto;
-                top: auto;
-                margin-top: 20px;
-                display: block;
-                font-size: 16px;
-            }
-        }
-
-        /* Impressum-Button */
+        /* Impressum-Button oben rechts */
         #impressumLink {
-            margin-top: 20px;
+            position: fixed;
+            top: 20px;
+            right: 20px;
             font-size: 18px;
             color: #333;
             text-decoration: none;
@@ -154,13 +106,55 @@
             background-color: #007BFF;
             border-radius: 5px;
             display: inline-block;
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
         }
 
         #impressumLink:hover {
+            background-color: #0056b3;
+        }
+
+        /* Mobilversion */
+        @media only screen and (max-width: 768px) {
+            .side-ad {
+                width: 150px;
+                font-size: 14px;
+            }
+
+            .ad-banner {
+                font-size: 16px;
+            }
+        }
+
+        /* Impressum-Seite Design */
+        #impressumPage {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 50px;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 10px;
+        }
+
+        #impressumPage h2 {
+            font-size: 32px;
+        }
+
+        #impressumPage p {
+            font-size: 18px;
+        }
+
+        #impressumBack {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        #impressumBack:hover {
             background-color: #0056b3;
         }
     </style>
@@ -212,9 +206,20 @@
     </div>
 
     <!-- Impressum Button -->
-    <a id="impressumLink" href="#" onclick="openImpressumPage()">Impressum</a>
+    <a id="impressumLink" href="javascript:void(0)" onclick="openImpressumPage()">Impressum</a>
+
+    <!-- Impressum-Seite -->
+    <div id="impressumPage">
+        <h2>Impressum</h2>
+        <p>Gymnasium Gaimersheim, Klasse 7b</p>
+        <p>Am Hochholzer Berg 2</p>
+        <p>85055 Gaimersheim</p>
+        <button id="impressumBack" onclick="closeImpressumPage()">Zurück</button>
+    </div>
 
     <script>
+        // Deine JavaScript-Funktionalitäten
+
         const quiz = [
             {
                 question: "What is the world's sixth-largest country?",
@@ -254,16 +259,8 @@
                 correctAnswer: "Kangaroos and koalas",
                 answers: ["Elephants and tigers", 
                           "Kangaroos and koalas", 
-                          "Pandas and monkeys", 
-                          "Lions and giraffes"]
-            },
-            {
-                question: "How old is the aboriginal culture in Australia?",
-                correctAnswer: "Over 65,000 years old",
-                answers: ["Over 10,000 years old", 
-                          "Over 30,000 years old", 
-                          "Over 65,000 years old", 
-                          "Over 100,000 years old"]
+                          "Lions and tigers", 
+                          "Bears and pandas"]
             }
         ];
 
@@ -271,7 +268,7 @@
         let score = 0;
         let coins = 0;
 
-        // Funktion für das Starten des Quiz
+        // Funktion zum Starten des Quiz
         function startQuiz() {
             document.getElementById('startScreen').style.display = 'none';
             document.getElementById('quizContainer').style.display = 'block';
@@ -328,7 +325,7 @@
             }
         }
 
-        // Funktion, um das Quiz zu beenden
+        // Funktion zum Beenden des Quiz
         function endQuiz() {
             document.getElementById('quizContainer').style.display = 'none';  // Quiz-Container ausblenden
             document.getElementById('endScreen').style.display = 'block';    // Endscreen anzeigen
@@ -337,13 +334,13 @@
             document.getElementById('finalCoins').innerText = "Du hast " + coins + " Münzen gesammelt!";
         }
 
-        // Funktion, um die Anzeige der Punkte und Münzen zu aktualisieren
+        // Funktion zum Aktualisieren der Punktestand-Anzeige
         function updateScoreDisplay() {
             document.getElementById('score').innerText = "Punkte: " + score;
             document.getElementById('coins').innerText = "Münzen: " + coins;
         }
 
-        // Funktion zum Neustarten des Quiz
+        // Funktion für das Neustarten des Quiz
         function restartQuiz() {
             currentQuestion = 0;
             score = 0;
@@ -353,14 +350,18 @@
             document.getElementById('startScreen').style.display = 'block';
         }
 
-        // Öffnet Impressum-Seite
+        // Impressum-Seite öffnen
         function openImpressumPage() {
-            window.open("impressum.html", "_blank");
+            document.getElementById('impressumPage').style.display = 'block'; // Zeige das Impressum
+        }
+
+        // Zurück zum Quiz nach Impressum
+        function closeImpressumPage() {
+            document.getElementById('impressumPage').style.display = 'none'; // Verstecke das Impressum
         }
 
         // Event Listener für den Start-Button
         document.getElementById('startButton').addEventListener('click', startQuiz);
-
     </script>
 </body>
 </html>
